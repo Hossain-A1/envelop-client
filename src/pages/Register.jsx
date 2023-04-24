@@ -1,5 +1,7 @@
 import { useState } from "react";
 import SectionTitle from "../components/SectionTitle";
+import FormControl from "../components/FormControl";
+import Button from "../components/Button";
 
 const Register = () => {
   const [formFields, setFormFields] = useState({
@@ -10,48 +12,46 @@ const Register = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
+    console.log(formFields);
+
+    // clear form fields-------------
+    setFormFields({
+      name: "",
+      email: "",
+      password: "",
+    })
   };
 
   return (
-    <div className="register flex flex-col justify-center items-center">
+    <div className="register flex flex-col justify-center items-center mt-10 xl:mt-20 max-md:mt-0">
       <form onSubmit={handleRegister} className="flex flex-col gap-5">
         <SectionTitle title={"Register..."} />
 
-        <div className="form-control flex flex-col gap-1">
-          <label htmlFor="name" className="cursor-pointer">
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            value={formFields.name}
-            onChange={(e) =>
-              setFormFields({ ...formFields, name: e.target.value })
-            }
-            placeholder="Enter your name."
-            className="py-2 px-6 rounded lg:w-[22rem] max-md::w-24 border border-violet-300 outline-none focus:border-violet-500 duration-300"
-          />
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            value={formFields.email}
-            onChange={(e) =>
-              setFormFields({ ...formFields, email: e.target.value })
-            }
-            placeholder="Enter your email."
-          />
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={formFields.password}
-            onChange={(e) =>
-              setFormFields({ ...formFields, password: e.target.value })
-            }
-            placeholder="Enter your password"
-          />
-        </div>
+        <FormControl
+          label="name"
+          labelText="name"
+          inputType="text"
+          placeholder="Write your name."
+          formFields={formFields}
+          setFormFields={setFormFields}
+        />
+        <FormControl
+          label="email"
+          labelText="Email Address"
+          inputType="email"
+          placeholder="Enter your email."
+          formFields={formFields}
+          setFormFields={setFormFields}
+        />
+        <FormControl
+          label="password"
+          labelText="Password"
+          inputType="password"
+          placeholder="Enter your password."
+          formFields={formFields}
+          setFormFields={setFormFields}
+        />
+      <Button btnText="Register" submit/>
       </form>
     </div>
   );
