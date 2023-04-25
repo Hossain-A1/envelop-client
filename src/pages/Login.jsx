@@ -1,17 +1,23 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import SectionTitle from "../components/SectionTitle";
 import FormControl from "../components/FormControl";
 import Button from "../components/Button";
+import { useLogin } from "../hooks/useLogin";
+import ErrorMessage from "../components/ErrorMessage";
 
-const Register = () => {
+const Login = () => {
   const [formFields, setFormFields] = useState({
     email: "",
     password: "",
   });
 
-  const handleLogin = (e) => {
+  const { login, isLoading, error } = useLogin();
+
+  const handleLogin = async (e) => {
     e.preventDefault();
     console.log(formFields);
+
+    await login(formFields.email, formFields.password)
 
     // clear form fields-------------
     setFormFields({
@@ -41,10 +47,12 @@ const Register = () => {
           formFields={formFields}
           setFormFields={setFormFields}
         />
-        <Button btnText="Login.." submit />
+        <Button btnText={isLoading ? "Logging..." : "Login"} submit />
+
+        {error && <ErrorMessage error={error}/>}
       </form>
     </div>
   );
 };
 
-export default Register;
+export default React.memo(Login);
